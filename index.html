@@ -188,26 +188,35 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <form class="main_form">
+                  <form id="client" class="main_form">
+                     <h3 id="rsuccess" style="color: green; font-weight: 600; display: none;">Referral Submitted Successfully</h3>
+                     <h3 id="rerror" style="color: red; font-weight: 600; display: none;"></h3>
                      <div class="row">
-                        <div class="col-sm-12">
-                           <input class="contactus" placeholder="Full Name" type="text" name="
-                              Full Name">
-                        </div>
-                        <div class="col-sm-12">
-                           <input class="contactus" placeholder="Email" type="text" name=" Email">
-                        </div>
-                        <div class="col-sm-12">
-                           <input class="contactus" placeholder="Phone" type="text" name="Phone">
-                        </div>
-                        <div class="col-sm-12">
-                           <textarea class="textarea" placeholder="Message" type="text" name="Message"></textarea>
-                        </div>
-                        <div class="col-sm-12">
-                           <button class="send">Send</button>
-                        </div>
+                       <div class="col-sm-12">
+                         <input id="clientName" class="contactus" placeholder="Client Name" type="text" name="clientName" required>
+                       </div>
+                       <div class="col-sm-12">
+                         <input id="businessName" class="contactus" placeholder="Business Name" type="text" name="businessName" required>
+                       </div>
+                       <div class="col-sm-12">
+                         <input id="businessEmail" class="contactus" placeholder="Business Email" type="email" name="businessEmail" required>
+                       </div>
+                       <div class="col-sm-12">
+                         <input id="businessPhoneNumber" class="contactus" placeholder="Phone Number" type="tel" name="businessPhoneNumber" required>
+                       </div>
+                       <div class="col-sm-12">
+                         <textarea id="requirement" class="textarea" placeholder="Requirement" name="requirement" required></textarea>
+                       </div>
+                       <div class="col-sm-12">
+                         <input id="referralCode" class="contactus" placeholder="Referral Code" type="text" name="referralCode">
+                       </div>
+                       <div class="col-sm-12">
+                         <button style="display: block;" type="submit" id="rs-btn" class="send">Submit</button>
+                         <button style="display: none;" id="rloading" class="send" disabled>Submitting...</button>
+                       </div>
                      </div>
-                  </form>
+                   </form>
+                   
                </div>
             </div>
          </div>
@@ -314,21 +323,17 @@
                   <form id="signup" class="main_form">
                      <div class="row">
                         <div class="col-sm-12">
-                           <input id="name" class="contactus" placeholder="Full Name" type="text" name="
-                              name">
+                           <input required id="name" class="contactus" placeholder="Full Name" type="text" name="name">
                         </div>
                         <div class="col-sm-12">
-                           <input id="email" class="contactus" placeholder="Email" type="text" name=" email">
+                           <input required id="email" class="contactus" placeholder="Email" type="text" name="email">
                         </div>
                         <div class="col-sm-12">
-                           <input id="phoneNumber" class="contactus" placeholder="Phone" type="text" name="phoneNumber">
-                        </div>
-                        <div class="col-sm-12">
-                           <textarea id="message" class="textarea" placeholder="Message" type="text" name="message"></textarea>
+                           <input required id="phoneNumber" class="contactus" placeholder="Phone" type="text" name="phoneNumber">
                         </div>
                         <div class="col-sm-12">
                            <button style="display: block;" type="submit"
-                           id="s-btn" class="send">Send</button>
+                           id="s-btn" class="send">SignUp</button>
                            <button  style="display: none;"
                            id="loading" class="send">Loading...</button>
                         </div>
@@ -400,16 +405,17 @@
          $(document).ready(function () {
            $('#signup').submit((e) => {
            e.preventDefault()
-           alert("hello")
+           alert("hello") 
          
            // Validation
            const name = $('#name').val().trim();
            const email = $('#email').val().trim();
            const phoneNumber = $('#phoneNumber').val().trim();
-           const message = $('#message').val().trim();
+           console.log(name,"name-");
+           
          
            // Check if all fields have values
-           if (!name || !email || !phoneNumber || !message) {
+           if (!name || !email || !phoneNumber) {
              alert('Please fill in all fields.');
              return;
            }
@@ -423,7 +429,7 @@
          
            $.ajax({
              url:
-             'https://script.google.com/macros/s/AKfycbwULtbW6KIENl_7GiYds6JXotHNuzQAz4G5CdTDFJWDvC2mgG2XPTb6mDPC7Xi4iXP_ug/exec',
+             'https://script.google.com/macros/s/AKfycbyOEo7aKNq0lSOL6j7eicYs7Jb3qNdLNHsp8-_8k4PYkw-feZ8szOOwloDiy3V-pzgWAg/exec',
              data: $('#signup').serialize(),
              method: 'post',
              success: function (response) {
@@ -446,7 +452,56 @@
            });
            });
          });
+         $(document).ready(function () {
+  $('#client').on('submit', function (e) {
+    e.preventDefault(); // Prevent the form from submitting the traditional way
+
+    // Define the submit button and loading spinner
+    const rsubmitButton = document.getElementById('rs-btn');
+    const rloadingButton = document.getElementById('rloading');
+    const rErrorButton = document.getElementById('rerror');
+    const rSuccessButton = document.getElementById('rsuccess');
+
+    // Show the loading spinner and hide the submit button
+    if (rsubmitButton) rsubmitButton.style.display = 'none';
+    if (rloadingButton) rloadingButton.style.display = 'block';
+
+    // Perform the AJAX request
+    $.ajax({
+      url: 'https://script.google.com/macros/s/AKfycbxkCT6cnJQrA37uFylMrcGEGlvuX-07EHMQPF0YY6UAknmlZtnYr1d3XBuDRSLVM6Dddw/exec',
+      data: $('#client').serialize(),
+      method: 'post',
+      success: function (response) {
+        if (rSuccessButton) {
+          rSuccessButton.style.display = 'block';
+        }
+
+        // Clear form fields
+        $('#client')[0].reset();
+
+        // Show the submit button again and hide the loading spinner
+        if (rsubmitButton) rsubmitButton.style.display = 'block';
+        if (rloadingButton) rloadingButton.style.display = 'none';
+      },
+      error: function (err) {
+        // Hide loading spinner and show error button
+        if (rloadingButton) rloadingButton.style.display = 'none';
+        if (rErrorButton) {
+          rErrorButton.style.display = 'block';
+          rErrorButton.textContent = "Something went wrong. Please try again.";
+        }
+      },
+    });
+  });
+});
+
+
          </script>
+      <script>
+        
+       </script>
+       
+
    </body>
 </html>
 
