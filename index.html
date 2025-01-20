@@ -195,35 +195,55 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <form id="client" class="main_form">
-                     <h3 id="rsuccess" style="color: green; font-weight: 600; display: none;">Referral Submitted Successfully</h3>
-                     <h3 id="rerror" style="color: red; font-weight: 600; display: none;"></h3>
+                  <form id="client" class="main_form" novalidate>
                      <div class="row">
                        <div class="col-sm-12">
-                         <input id="clientName" class="contactus" placeholder="Client Name" type="text" name="clientName" required>
+                         <label for="clientName">Client Name<span style="color: red;">*</span></label>
+                         <input id="clientName" class="contactus" placeholder="Enter Client Name" type="text" name="clientName">
+                         <small class="error-message" style="color: red; display: none;">Client Name is required</small>
                        </div>
                        <div class="col-sm-12">
-                         <input id="businessName" class="contactus" placeholder="Business Name" type="text" name="businessName" required>
+                         <label for="businessName">Business Name<span style="color: red;">*</span></label>
+                         <input id="businessName" class="contactus" placeholder="Enter Business Name" type="text" name="businessName">
+                         <small id="businessNameError" class="error-message" style="color: red; display: none;">Business Name is required</small>
                        </div>
                        <div class="col-sm-12">
-                         <input id="businessEmail" class="contactus" placeholder="Business Email" type="email" name="businessEmail" required>
+                         <label for="businessEmail">Business Email<span style="color: red;">*</span></label>
+                         <input id="businessEmail" class="contactus" placeholder="Enter Business Email" type="email" name="businessEmail">
+                         <small id="businessEmailError" class="error-message" style="color: red; display: none;">Valid Business Email is required</small>
                        </div>
                        <div class="col-sm-12">
-                         <input id="businessPhoneNumber" class="contactus" placeholder="Phone Number" type="tel" name="businessPhoneNumber" required>
+                         <label for="businessPhoneNumber">Phone Number<span style="color: red;">*</span></label>
+                         <input id="businessPhoneNumber" class="contactus" placeholder="Enter Phone Number" type="tel" name="businessPhoneNumber">
+                         <small id="businessPhoneNumberError" class="error-message" style="color: red; display: none;">Valid Phone Number is required</small>
                        </div>
                        <div class="col-sm-12">
-                         <textarea id="requirement" class="textarea" placeholder="Requirement" name="requirement" required></textarea>
+                         <label style="font-weight: bold; font-size: 16px; color: #333;">Requirement<span style="color: red;">*</span></label><br>
+                         <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 14px;">
+                           <input id="requirement" type="checkbox" name="requirement" value="Professional Website">
+                           Professional Website
+                         </label>
+                         <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 14px;">
+                           <input  id="requirement" type="checkbox" name="requirement" value="Digital Marketing">
+                           Digital Marketing
+                         </label>
+                         <small  id="requirementError" class="error-message" style="color: red; display: none;">Please select at least one requirement</small>
                        </div>
                        <div class="col-sm-12">
-                         <input id="referralCode" class="contactus" placeholder="Referral Code" type="text" name="referralCode">
+                         <label for="additional">Additional Details<span style="color: red;">*</span></label>
+                         <textarea id="additional" class="textarea" placeholder="Enter Additional Details" name="additional"></textarea>
                        </div>
                        <div class="col-sm-12">
-                         <button style="display: block; width: 100%!important;" type="submit" id="rs-btn" class="send ">Submit</button>
-                         <button  style="display: none; width: 100%!important; " disabled id="rloading" class="send " disabled>Submitting...</button>
+                         <label for="referralCode">Referral Code<span style="color: red;">*</span></label>
+                         <input id="referralCode" class="contactus" placeholder="Enter Referral Code" type="text" name="referralCode">
+                         <small id="referralCodeError" class="error-message" style="color: red; display: none;">Referral Code is required</small>
+                       </div>
+                       <div class="col-sm-12">
+                         <button style="display: block; width: 100%!important;" type="submit" id="rs-btn" class="send">Submit</button>
+                         <button style="display: none; width: 100%!important;" disabled id="rloading" class="send">Submitting...</button>
                        </div>
                      </div>
                    </form>
-                   
                </div>
             </div>
          </div>
@@ -327,25 +347,37 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <form id="signup" class="main_form">
+                  <form id="signup" class="main_form" novalidate>
                      <div class="row">
-                        <div class="col-sm-12">
-                           <input required id="name" class="contactus" placeholder="Full Name*" type="text" name="name">
-                        </div>
-                        <div class="col-sm-12">
-                           <input required id="email" class="contactus" placeholder="Email*" type="text" name="email">
-                        </div>
-                        <div class="col-sm-12">
-                           <input required id="phoneNumber" class="contactus" placeholder="PhoneNumber*" type="text" name="phoneNumber">
-                        </div>
-                        <div class="col-sm-12">
-                           <button style="display: block; width: 100%!important;" type="submit"
-                           id="s-btn"  class="send">SignUp</button>
-                           <button  style="display: none;width:100%!important;"
-                           id="loading" disabled class="send">Loading...</button>
-                        </div>
+                       <!-- Full Name -->
+                       <div class="col-sm-12">
+                         <label for="name">Full Name<span style="color: red;">*</span></label>
+                         <input required id="name" class="contactus" placeholder="Enter Full Name" type="text" name="name">
+                         <small id="nameError" class="error-message" style="color: red; display: none;">Full Name is required</small>
+                       </div>
+                       
+                       <!-- Email -->
+                       <div class="col-sm-12">
+                         <label for="email">Email<span style="color: red;">*</span></label>
+                         <input required id="email" class="contactus" placeholder="Enter Email" type="email" name="email">
+                         <small id="emailError" class="error-message" style="color: red; display: none;">Valid Email is required</small>
+                       </div>
+                       
+                       <!-- Phone Number -->
+                       <div class="col-sm-12">
+                         <label for="phoneNumber">Phone Number<span style="color: red;">*</span></label>
+                         <input required id="phoneNumber" class="contactus" placeholder="Enter Phone Number" type="tel" name="phoneNumber">
+                         <small id="phoneNumberError" class="error-message" style="color: red; display: none;">Valid Phone Number is required</small>
+                       </div>
+                       
+                       <!-- Submit Buttons -->
+                       <div class="col-sm-12">
+                         <button style="display: block; width: 100%!important;" type="submit" id="s-btn" class="send">Sign Up</button>
+                         <button style="display: none; width: 100%!important;" id="loading" disabled class="send">Loading...</button>
+                       </div>
                      </div>
-                  </form>
+                   </form>
+                   
                </div>
             </div>
          </div>
@@ -444,132 +476,127 @@
          });
       </script>
        <script>
+
+
          $(document).ready(function () {
-           $('#signup').submit((e) => {
-           e.preventDefault()
-         
-           // Validation
-           const name = $('#name').val().trim();
-           const email = $('#email').val().trim();
-           const phoneNumber = $('#phoneNumber').val().trim();
-           console.log(name,"name-");
-           
-         
-       
-         
-           const loading = document.getElementById('loading');
-           const btn = document.getElementById('s-btn');
-           const successMessage = document.getElementById('successMessage');
-         
-           loading.style.display = 'block';
-           btn.style.display = 'none';
-         
-           $.ajax({
-             url:
-             'https://script.google.com/macros/s/AKfycbyOEo7aKNq0lSOL6j7eicYs7Jb3qNdLNHsp8-_8k4PYkw-feZ8szOOwloDiy3V-pzgWAg/exec',
-             data: $('#signup').serialize(),
-             method: 'post',
-             success: function (response) {
-                const toast = document.getElementById('toast');
-        if (toast) {
-          toast.classList.add('show');
-toast.innerHTML = 'Signup successful,<br>and you will receive your referral code in your email within 24 hours.';
-
-
-          // Hide the toast after 3 seconds
-          setTimeout(function () {
-            toast.classList.remove('show');
-          }, 4000);
-        }
-             
-         
-             // Clear form fields
-             $('#signup')[0].reset();
-         
-             btn.style.display = 'block';
-             loading.style.display = 'none';
-             },
-             error: function (err) {
-             loading.style.display = 'none';
-             btn.style.display = 'block';
-               if (toast) {
-      // Change the toast color to red for error messages
-      toast.classList.add('show');
-      toast.style.backgroundColor = '#dc3545'; // Red background for error
-
-      // Update the toast message
-      toast.textContent = 'Something went wrong. Please try again.';
-
-      // Hide the toast after 3 seconds
-      setTimeout(function () {
-        toast.classList.remove('show');
-      }, 3000);
+  const showError = (input, message) => {
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
     }
-             },
-             
-           });
-           });
-         });
-         $(document).ready(function () {
-  $('#client').on('submit', function (e) {
-    e.preventDefault(); // Prevent the form from submitting the traditional way
+    input.style.borderColor = 'red';
+  };
 
-    // Define the submit button and loading spinner
-    const rsubmitButton = document.getElementById('rs-btn');
-    const rloadingButton = document.getElementById('rloading');
-    const rErrorButton = document.getElementById('rerror');
-    const rSuccessButton = document.getElementById('rsuccess');
+  const hideError = (input) => {
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+    input.style.borderColor = 'green';
+  };
 
-    // Show the loading spinner and hide the submit button
-    if (rsubmitButton) rsubmitButton.style.display = 'none';
-    if (rloadingButton) rloadingButton.style.display = 'block';
+  const validateField = (field) => {
+    const fieldId = field.id;
+    const value = field.value.trim();
+    let isValid = true;
 
-    // Perform the AJAX request
-    $.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbxkCT6cnJQrA37uFylMrcGEGlvuX-07EHMQPF0YY6UAknmlZtnYr1d3XBuDRSLVM6Dddw/exec',
-      data: $('#client').serialize(),
-      method: 'post',
-      success: function (response) {
-         $('#client')[0].reset();
-         const toast = document.getElementById('toast');
-        if (toast) {
-          toast.classList.add('show');
-          toast.textContent = 'Referral submitted successfully, thank you for your referral!';
-
-          // Hide the toast after 3 seconds
-          setTimeout(function () {
-            toast.classList.remove('show');
-          }, 3000);
+    switch (fieldId) {
+      case 'name':
+        if (!value) {
+          showError(field, 'Name is required');
+          isValid = false;
+        } else {
+          hideError(field);
         }
-       
+        break;
 
-        // Show the submit button again and hide the loading spinner
-        if (rsubmitButton) rsubmitButton.style.display = 'block';
-        if (rloadingButton) rloadingButton.style.display = 'none';
-      },
-      error: function (err) {
-  // Hide loading spinner and show error button
-  if (rloadingButton) rloadingButton.style.display = 'none';
+      case 'email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value || !emailRegex.test(value)) {
+          showError(field, 'Enter a valid email address');
+          isValid = false;
+        } else {
+          hideError(field);
+        }
+        break;
 
-    if (toast) {
-      // Change the toast color to red for error messages
-      toast.classList.add('show');
-      toast.style.backgroundColor = '#dc3545'; // Red background for error
+      case 'phoneNumber':
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!value || !phoneRegex.test(value)) {
+          showError(field, 'Enter a valid 10-digit phone number');
+          isValid = false;
+        } else {
+          hideError(field);
+        }
+        break;
+    }
 
-      // Update the toast message
-      toast.textContent = 'Something went wrong. Please try again.';
+    return isValid;
+  };
 
-      // Hide the toast after 3 seconds
-      setTimeout(function () {
-        toast.classList.remove('show');
-      }, 3000);
-    
-  }
-}
+  // Attach focus and input event for live validation
+  $('#signup input').on('focus input', function () {
+    validateField(this);
+  });
 
+  // Form submission
+  $('#signup').on('submit', function (e) {
+    e.preventDefault(); // Prevent form submission
+
+    const fields = ['name', 'email', 'phoneNumber'];
+    let isFormValid = true;
+
+    // Validate all fields
+    fields.forEach((fieldId) => {
+      const field = document.getElementById(fieldId);
+      if (!validateField(field)) {
+        isFormValid = false;
+      }
     });
+
+    if (isFormValid) {
+      const btn = document.getElementById('s-btn');
+      const loading = document.getElementById('loading');
+      const toast = document.getElementById('toast');
+
+      // Show loading spinner
+      btn.style.display = 'none';
+      loading.style.display = 'block';
+
+      $.ajax({
+        url:
+          'https://script.google.com/macros/s/AKfycbyOEo7aKNq0lSOL6j7eicYs7Jb3qNdLNHsp8-_8k4PYkw-feZ8szOOwloDiy3V-pzgWAg/exec',
+        data: $('#signup').serialize(),
+        method: 'POST',
+        success: function () {
+          $('#signup')[0].reset(); // Reset form
+          if (toast) {
+            toast.classList.add('show');
+            toast.style.backgroundColor = '#28a745'; // Green for success
+            toast.innerHTML =
+              'Signup successful,<br>and you will receive your referral code in your email within 24 hours.';
+            setTimeout(() => toast.classList.remove('show'), 4000);
+          }
+          btn.style.display = 'block';
+          loading.style.display = 'none';
+        },
+        error: function () {
+          if (toast) {
+            toast.classList.add('show');
+            toast.style.backgroundColor = '#dc3545'; // Red for error
+            toast.textContent = 'Something went wrong. Please try again.';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+          }
+          btn.style.display = 'block';
+          loading.style.display = 'none';
+        },
+      });
+    }
   });
 });
+
+
  $(document).ready(function () {
            $('#request').submit((e) => {
            e.preventDefault()
