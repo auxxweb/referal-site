@@ -792,7 +792,7 @@ $grey: #999;
 }
 
 /* Toast styles */
-.toast {
+body .toast {
      visibility: hidden;
      min-width: 250px;
      margin-left: -125px; /* Center the toast horizontally */
@@ -814,7 +814,7 @@ $grey: #999;
      justify-content: space-between; /* Space between message and close button */
    }
    
-   .toast.show {
+   body .toast.show {
      visibility: visible;
      opacity: 1;
 
@@ -824,7 +824,7 @@ $grey: #999;
      flex-grow: 1; /* Allow message to take the remaining space */
    }
    
-   .toast-close {
+   body .toast-close {
      font-size: 20px;
      color: #fff;
      cursor: pointer;
@@ -832,12 +832,12 @@ $grey: #999;
      transition: transform 0.2s ease-in-out;
    }
    
-   .toast-close:hover {
+   body .toast-close:hover {
      transform: scale(1.2); /* Slightly increase size on hover */
    }
    
    /* Add animation for the close icon (hover effect) */
-   .toast-close:active {
+   body .toast-close:active {
      transform: scale(0.9); /* Slightly shrink when clicked */
    }
    
