@@ -796,12 +796,12 @@ $grey: #999;
      visibility: hidden;
      min-width: 250px;
      margin-left: -125px; /* Center the toast horizontally */
-     background-color: #28a745; /* Green background for success */
+     background-color: #28a745!important; /* Green background for success */
      color: #fff;
      text-align: left; /* Align text to the left */
      border-radius: 8px; /* Rounded corners */
      padding: 16px;
-     position: fixed;
+     position: fixed!important;
      z-index: 1;
      left: 50%;
      bottom: 50%; /* Position it slightly above the bottom */
@@ -841,23 +841,7 @@ $grey: #999;
      transform: scale(0.9); /* Slightly shrink when clicked */
    }
    
-   /* Invalid input field style */
-input:invalid, textarea:invalid {
-  border: 2px solid red;
-}
-
-/* Valid input field style (optional, for when the field is valid) */
-input:valid, textarea:valid {
-  border: 2px solid green;
-}
-
-/* Error message style */
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
+   
 
 
 /** end footer **/
