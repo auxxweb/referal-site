@@ -791,6 +791,74 @@ $grey: #999;
      color: #078a8e;
 }
 
+/* Toast styles */
+.toast {
+     visibility: hidden;
+     min-width: 250px;
+     margin-left: -125px; /* Center the toast horizontally */
+     background-color: #28a745; /* Green background for success */
+     color: #fff;
+     text-align: left; /* Align text to the left */
+     border-radius: 8px; /* Rounded corners */
+     padding: 16px;
+     position: fixed;
+     z-index: 1;
+     left: 50%;
+     bottom: 50%; /* Position it slightly above the bottom */
+     font-size: 16px;
+     opacity: 0;
+     transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+     display: flex;
+     align-items: center; /* Center the content vertically */
+     justify-content: space-between; /* Space between message and close button */
+   }
+   
+   .toast.show {
+     visibility: visible;
+     opacity: 1;
+
+   }
+   
+   #toast-message {
+     flex-grow: 1; /* Allow message to take the remaining space */
+   }
+   
+   .toast-close {
+     font-size: 20px;
+     color: #fff;
+     cursor: pointer;
+     padding: 0 10px;
+     transition: transform 0.2s ease-in-out;
+   }
+   
+   .toast-close:hover {
+     transform: scale(1.2); /* Slightly increase size on hover */
+   }
+   
+   /* Add animation for the close icon (hover effect) */
+   .toast-close:active {
+     transform: scale(0.9); /* Slightly shrink when clicked */
+   }
+   
+   /* Invalid input field style */
+input:invalid, textarea:invalid {
+  border: 2px solid red;
+}
+
+/* Valid input field style (optional, for when the field is valid) */
+input:valid, textarea:valid {
+  border: 2px solid green;
+}
+
+/* Error message style */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
 
 /** end footer **/
 

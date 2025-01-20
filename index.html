@@ -34,6 +34,13 @@
    </head>
    <!-- body -->
    <body class="main-layout">
+      
+      <!-- Toast container (hidden by default) -->
+<div id="toast" class="toast">
+   <span id="toast-message"></span> 
+   <span id="toast-close" class="toast-close">&#10006;</span> <!-- Close button -->
+ </div>
+ 
       <!-- loader  -->
       <div class="loader_bg">
          <div class="loader"><img src="images/loading.gif" alt="#" /></div>
@@ -211,8 +218,8 @@
                          <input id="referralCode" class="contactus" placeholder="Referral Code" type="text" name="referralCode">
                        </div>
                        <div class="col-sm-12">
-                         <button style="display: block;" type="submit" id="rs-btn" class="send">Submit</button>
-                         <button style="display: none;" id="rloading" class="send" disabled>Submitting...</button>
+                         <button style="display: block; width: 100%!important;" type="submit" id="rs-btn" class="send ">Submit</button>
+                         <button  style="display: none; width: 100%!important; " disabled id="rloading" class="send " disabled>Submitting...</button>
                        </div>
                      </div>
                    </form>
@@ -323,19 +330,53 @@
                   <form id="signup" class="main_form">
                      <div class="row">
                         <div class="col-sm-12">
-                           <input required id="name" class="contactus" placeholder="Full Name" type="text" name="name">
+                           <input required id="name" class="contactus" placeholder="Full Name*" type="text" name="name">
                         </div>
                         <div class="col-sm-12">
-                           <input required id="email" class="contactus" placeholder="Email" type="text" name="email">
+                           <input required id="email" class="contactus" placeholder="Email*" type="text" name="email">
                         </div>
                         <div class="col-sm-12">
-                           <input required id="phoneNumber" class="contactus" placeholder="Phone" type="text" name="phoneNumber">
+                           <input required id="phoneNumber" class="contactus" placeholder="PhoneNumber*" type="text" name="phoneNumber">
                         </div>
                         <div class="col-sm-12">
-                           <button style="display: block;" type="submit"
-                           id="s-btn" class="send">SignUp</button>
-                           <button  style="display: none;"
-                           id="loading" class="send">Loading...</button>
+                           <button style="display: block; width: 100%!important;" type="submit"
+                           id="s-btn"  class="send">SignUp</button>
+                           <button  style="display: none;width:100%!important;"
+                           id="loading" disabled class="send">Loading...</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end contact -->
+                   <!-- contact testimonial-->
+      <div id="signUp" class="contact" style="background-image: url(./images/request.png);">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="titlepage">
+                     <h2 >Referral History<span class="white"> </span></h2>
+                  </div>
+                  <div class="cont">
+                     <span>Request for   
+                       </br>
+                       Referral History</span>
+                     
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <form id="request" class="main_form">
+                     <div class="row">
+                        <div class="col-sm-12">
+                           <input required id="reqemail" class="contactus" placeholder="Email*" type="text" name="email">
+                        </div>
+                        <div class="col-sm-12">
+                           <button style="display: block; width: 100%!important;" type="submit"
+                           id="reqs-btn"  class="send">Request</button>
+                           <button  style="display: none;width:100%!important;"
+                           id="reqloading" disabled class="send">Requesting...</button>
                         </div>
                      </div>
                   </form>
@@ -351,7 +392,8 @@
             <div class="container">
                <div class="row">
                   <div class="col-md-12">
-                     <p>© 2019 All Rights Reserved. <a href="https://html.design/">Free html Templates</a></p>
+                     Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This website is designed and developed by <a href="https://auxxweb.in" target="_blank">Auxxweb IT Solutions</a></p>
+                    <div class="col-lg-4 col-sm-12 footer-social">
                   </div>
                </div>
             </div>
@@ -414,11 +456,7 @@
            console.log(name,"name-");
            
          
-           // Check if all fields have values
-           if (!name || !email || !phoneNumber) {
-             alert('Please fill in all fields.');
-             return;
-           }
+       
          
            const loading = document.getElementById('loading');
            const btn = document.getElementById('s-btn');
@@ -433,9 +471,18 @@
              data: $('#signup').serialize(),
              method: 'post',
              success: function (response) {
-             if (successMessage) {
-               successMessage.style.display = 'block';
-             }
+                const toast = document.getElementById('toast');
+        if (toast) {
+          toast.classList.add('show');
+toast.innerHTML = 'Signup successful,<br>and you will receive your referral code in your email within 24 hours.';
+
+
+          // Hide the toast after 3 seconds
+          setTimeout(function () {
+            toast.classList.remove('show');
+          }, 4000);
+        }
+             
          
              // Clear form fields
              $('#signup')[0].reset();
@@ -446,7 +493,19 @@
              error: function (err) {
              loading.style.display = 'none';
              btn.style.display = 'block';
-             alert('Something went wrong. Please try again.');
+               if (toast) {
+      // Change the toast color to red for error messages
+      toast.classList.add('show');
+      toast.style.backgroundColor = '#dc3545'; // Red background for error
+
+      // Update the toast message
+      toast.textContent = 'Something went wrong. Please try again.';
+
+      // Hide the toast after 3 seconds
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
              },
              
            });
@@ -472,28 +531,109 @@
       data: $('#client').serialize(),
       method: 'post',
       success: function (response) {
-        if (rSuccessButton) {
-          rSuccessButton.style.display = 'block';
-        }
+         $('#client')[0].reset();
+         const toast = document.getElementById('toast');
+        if (toast) {
+          toast.classList.add('show');
+          toast.textContent = 'Referral submitted successfully, thank you for your referral!';
 
-        // Clear form fields
-        $('#client')[0].reset();
+          // Hide the toast after 3 seconds
+          setTimeout(function () {
+            toast.classList.remove('show');
+          }, 3000);
+        }
+       
 
         // Show the submit button again and hide the loading spinner
         if (rsubmitButton) rsubmitButton.style.display = 'block';
         if (rloadingButton) rloadingButton.style.display = 'none';
       },
       error: function (err) {
-        // Hide loading spinner and show error button
-        if (rloadingButton) rloadingButton.style.display = 'none';
-        if (rErrorButton) {
-          rErrorButton.style.display = 'block';
-          rErrorButton.textContent = "Something went wrong. Please try again.";
-        }
-      },
+  // Hide loading spinner and show error button
+  if (rloadingButton) rloadingButton.style.display = 'none';
+
+    if (toast) {
+      // Change the toast color to red for error messages
+      toast.classList.add('show');
+      toast.style.backgroundColor = '#dc3545'; // Red background for error
+
+      // Update the toast message
+      toast.textContent = 'Something went wrong. Please try again.';
+
+      // Hide the toast after 3 seconds
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    
+  }
+}
+
     });
   });
 });
+ $(document).ready(function () {
+           $('#request').submit((e) => {
+           e.preventDefault()
+         
+           // Validation
+           const name = $('#reqemail').val().trim();
+
+           
+         
+       
+         
+           const reqloading = document.getElementById('reqloading');
+           const reqbtn = document.getElementById('reqs-btn');
+         
+           reqloading.style.display = 'block';
+           reqbtn.style.display = 'none';
+         
+           $.ajax({
+             url:
+             'https://script.google.com/macros/s/AKfycbyWKtdF04RBvWHxrRNOThvMaH3uca2KehkjTkC-jj1mEuUCH1e-B-RsvOu32-YJ5nx6qw/exec',
+             data: $('#request').serialize(),
+             method: 'post',
+             success: function (response) {
+                const toast = document.getElementById('toast');
+        if (toast) {
+          toast.classList.add('show');
+toast.innerHTML = 'Requested successful,<br>and you will receive your Referral History  in your email within 24 hours.';
+
+
+          // Hide the toast after 3 seconds
+          setTimeout(function () {
+            toast.classList.remove('show');
+          }, 4000);
+        }
+             
+         
+             // Clear form fields
+             $('#request')[0].reset();
+         
+             reqbtn.style.display = 'block';
+             reqloading.style.display = 'none';
+             },
+             error: function (err) {
+             reqloading.style.display = 'none';
+             reqbtn.style.display = 'block';
+               if (toast) {
+      // Change the toast color to red for error messages
+      toast.classList.add('show');
+      toast.style.backgroundColor = '#dc3545'; // Red background for error
+
+      // Update the toast message
+      toast.textContent = 'Something went wrong. Please try again.';
+
+      // Hide the toast after 3 seconds
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+             },
+             
+           });
+           });
+         });
 
 
          </script>
