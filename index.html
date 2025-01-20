@@ -474,7 +474,118 @@
          return false;
          });
       </script>
-       <script>
+       <script>$(document).ready(function () {
+         $('#client').on('submit', function (e) {
+           e.preventDefault(); // Prevent the form from submitting the traditional way
+       
+           const fields = [
+             'clientName',
+             'businessName',
+             'businessEmail',
+             'businessPhoneNumber',
+             'referralCode',
+             'requirement'
+           ];
+       
+           let isValid = true; // Flag to track validation status
+       
+           // Loop through fields to validate them
+           fields.forEach((fieldId) => {
+             const field = $(`#${fieldId}`);
+             const value = field.val().trim();
+       
+             if (!value) {
+               isValid = false;
+               field.css('border-color', 'red'); // Highlight invalid fields
+               field.next('.error-message').text('This field is required').show();
+             } else if (fieldId === 'businessEmail' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+               isValid = false;
+               field.css('border-color', 'red'); // Highlight invalid fields
+               field.next('.error-message').text('Enter a valid email address').show();
+             } else {
+               field.css('border-color', 'green'); // Mark valid fields
+               field.next('.error-message').hide();
+             }
+           });
+       
+           // If validation fails, stop submission
+           if (!isValid) return;
+       
+           // Define the submit button and loading spinner
+           const rsubmitButton = document.getElementById('rs-btn');
+           const rloadingButton = document.getElementById('rloading');
+           const toast = document.getElementById('toast');
+       
+           // Show the loading spinner and hide the submit button
+           if (rsubmitButton) rsubmitButton.style.display = 'none';
+           if (rloadingButton) rloadingButton.style.display = 'block';
+       
+           // Perform the AJAX request
+           $.ajax({
+             url: 'https://script.google.com/macros/s/AKfycbxkCT6cnJQrA37uFylMrcGEGlvuX-07EHMQPF0YY6UAknmlZtnYr1d3XBuDRSLVM6Dddw/exec',
+             data: $('#client').serialize(),
+             method: 'post',
+             success: function (response) {
+               $('#client')[0].reset(); // Reset form fields
+               if (toast) {
+                 toast.classList.add('show');
+                 toast.textContent = 'Referral submitted successfully, thank you for your referral!';
+                 setTimeout(function () {
+                   toast.classList.remove('show');
+                 }, 3000);
+               }
+       
+               // Show the submit button again and hide the loading spinner
+               if (rsubmitButton) rsubmitButton.style.display = 'block';
+               if (rloadingButton) rloadingButton.style.display = 'none';
+       
+               // Reset field styles
+               fields.forEach((fieldId) => {
+                 $(`#${fieldId}`).css('border-color', '');
+               });
+             },
+             error: function (err) {
+               // Hide loading spinner and show error message
+               if (rloadingButton) rloadingButton.style.display = 'none';
+               if (toast) {
+                 toast.classList.add('show');
+                 toast.style.backgroundColor = '#dc3545'; // Red for error
+                 toast.textContent = 'Something went wrong. Please try again.';
+                 setTimeout(function () {
+                   toast.classList.remove('show');
+                 }, 3000);
+               }
+       
+               // Show the submit button again
+               if (rsubmitButton) rsubmitButton.style.display = 'block';
+             }
+           });
+         });
+       
+         // Attach live validation on input focus and typing
+         const fields = [
+           'clientName',
+           'businessName',
+           'businessEmail',
+           'businessPhoneNumber',
+           'referralCode',
+           'requirement'
+         ];
+         fields.forEach((fieldId) => {
+           $(`#${fieldId}`).on('input focus', function () {
+             const value = $(this).val().trim();
+             if (value) {
+               $(this).css('border-color', 'green');
+               $(this).next('.error-message').hide();
+             } else {
+               $(this).css('border-color', 'red');
+               $(this).next('.error-message').text('This field is required').show();
+             }
+           });
+         });
+       });
+       
+
 
 
          $(document).ready(function () {
