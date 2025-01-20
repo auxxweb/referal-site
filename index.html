@@ -401,17 +401,16 @@
                <div class="col-md-6">
                   <form id="request" class="main_form">
                      <div class="row">
-                        <div class="col-sm-12">
-                           <input required id="reqemail" class="contactus" placeholder="Email*" type="text" name="email">
-                        </div>
-                        <div class="col-sm-12">
-                           <button style="display: block; width: 100%!important;" type="submit"
-                           id="reqs-btn"  class="send">Request</button>
-                           <button  style="display: none;width:100%!important;"
-                           id="reqloading" disabled class="send">Requesting...</button>
-                        </div>
+                       <div class="col-sm-12">
+                         <input required id="reqemail" class="contactus" placeholder="Email*" type="text" name="email">
+                         <small class="error-message" style="color: red; display: none;"></small>
+                       </div>
+                       <div class="col-sm-12">
+                         <button style="display: block; width: 100%!important;" type="submit" id="reqs-btn" class="send">Request</button>
+                         <button style="display: none;width:100%!important;" id="reqloading" disabled class="send">Requesting...</button>
+                       </div>
                      </div>
-                  </form>
+                   </form>
                </div>
             </div>
          </div>
@@ -597,75 +596,102 @@
 });
 
 
- $(document).ready(function () {
-           $('#request').submit((e) => {
-           e.preventDefault()
-         
-           // Validation
-           const name = $('#reqemail').val().trim();
-
-           
-         
-       
-         
-           const reqloading = document.getElementById('reqloading');
-           const reqbtn = document.getElementById('reqs-btn');
-         
-           reqloading.style.display = 'block';
-           reqbtn.style.display = 'none';
-         
-           $.ajax({
-             url:
-             'https://script.google.com/macros/s/AKfycbyWKtdF04RBvWHxrRNOThvMaH3uca2KehkjTkC-jj1mEuUCH1e-B-RsvOu32-YJ5nx6qw/exec',
-             data: $('#request').serialize(),
-             method: 'post',
-             success: function (response) {
-                const toast = document.getElementById('toast');
-        if (toast) {
-          toast.classList.add('show');
-toast.innerHTML = 'Requested successful,<br>and you will receive your Referral History  in your email within 24 hours.';
-
-
-          // Hide the toast after 3 seconds
-          setTimeout(function () {
-            toast.classList.remove('show');
-          }, 4000);
-        }
-             
-         
-             // Clear form fields
-             $('#request')[0].reset();
-         
-             reqbtn.style.display = 'block';
-             reqloading.style.display = 'none';
-             },
-             error: function (err) {
-             reqloading.style.display = 'none';
-             reqbtn.style.display = 'block';
-               if (toast) {
-      // Change the toast color to red for error messages
-      toast.classList.add('show');
-      toast.style.backgroundColor = '#dc3545'; // Red background for error
-
-      // Update the toast message
-      toast.textContent = 'Something went wrong. Please try again.';
-
-      // Hide the toast after 3 seconds
-      setTimeout(function () {
-        toast.classList.remove('show');
-      }, 3000);
+$(document).ready(function () {
+  const showError = (input, message) => {
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
     }
-             },
-             
-           });
-           });
-         });
+    input.style.borderColor = 'red';
+  };
+
+  const hideError = (input) => {
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+    input.style.borderColor = 'green';
+  };
+
+  const validateEmail = (emailField) => {
+    const email = emailField.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      showError(emailField, 'Email is required');
+      return false;
+    } else if (!emailRegex.test(email)) {
+      showError(emailField, 'Enter a valid Email');
+      return false;
+    } else {
+      hideError(emailField);
+      return true;
+    }
+  };
+
+  $('#request').submit(function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const emailField = document.getElementById('reqemail');
+    const isEmailValid = validateEmail(emailField);
+
+    // Proceed only if the email is valid
+    if (isEmailValid) {
+      const reqloading = document.getElementById('reqloading');
+      const reqbtn = document.getElementById('reqs-btn');
+      const toast = document.getElementById('toast');
+
+      // Show loading spinner
+      reqloading.style.display = 'block';
+      reqbtn.style.display = 'none';
+
+      $.ajax({
+        url: 'https://script.google.com/macros/s/AKfycbyWKtdF04RBvWHxrRNOThvMaH3uca2KehkjTkC-jj1mEuUCH1e-B-RsvOu32-YJ5nx6qw/exec',
+        data: $('#request').serialize(),
+        method: 'POST',
+        success: function () {
+          // Show success toast message
+          if (toast) {
+            toast.classList.add('show');
+            toast.style.backgroundColor = '#28a745'; // Green for success
+            toast.innerHTML =
+              'Request successful,<br>and you will receive your Referral History in your email within 24 hours.';
+            setTimeout(() => toast.classList.remove('show'), 4000);
+          }
+
+          // Clear form fields
+          $('#request')[0].reset();
+
+          reqbtn.style.display = 'block';
+          reqloading.style.display = 'none';
+        },
+        error: function () {
+          // Show error toast message
+          if (toast) {
+            toast.classList.add('show');
+            toast.style.backgroundColor = '#dc3545'; // Red for error
+            toast.textContent = 'Something went wrong. Please try again.';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+          }
+
+          reqloading.style.display = 'none';
+          reqbtn.style.display = 'block';
+        },
+      });
+    }
+  });
+
+  // Attach live validation to the email field
+  $('#reqemail').on('input focus', function () {
+    validateEmail(this);
+  });
+});
+
 
 
          </script>
-      <script>
-        
-       </script>
+
        
 
    </body>
